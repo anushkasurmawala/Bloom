@@ -1,0 +1,382 @@
+{
+  "goal_accuracy": 0.97,
+  "selection_metric": "Training grouped CV accuracy; holdout results exploratory because this set has been examined previously. Not nested or external validation. App model is not changed by this script.",
+  "models": [
+    {
+      "model": "Random forest",
+      "best_parameters": {
+        "min_samples_leaf": 5,
+        "max_features": "sqrt",
+        "max_depth": 4,
+        "class_weight": null
+      },
+      "training_cv_accuracy": 0.7216385764772861,
+      "training_cv_macro_f1": 0.5787071591186491,
+      "test_report": {
+        "high risk": {
+          "precision": 0.7777777777777778,
+          "recall": 0.875,
+          "f1-score": 0.8235294117647058,
+          "support": 16.0
+        },
+        "low risk": {
+          "precision": 0.7101449275362319,
+          "recall": 0.98,
+          "f1-score": 0.8235294117647058,
+          "support": 50.0
+        },
+        "mid risk": {
+          "precision": 1.0,
+          "recall": 0.08695652173913043,
+          "f1-score": 0.16,
+          "support": 23.0
+        },
+        "accuracy": 0.7303370786516854,
+        "macro avg": {
+          "precision": 0.8293075684380032,
+          "recall": 0.6473188405797101,
+          "f1-score": 0.6023529411764705,
+          "support": 89.0
+        },
+        "weighted avg": {
+          "precision": 0.7972100092275959,
+          "recall": 0.7303370786516854,
+          "f1-score": 0.6520555188367481,
+          "support": 89.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          14,
+          2,
+          0
+        ],
+        [
+          1,
+          49,
+          0
+        ],
+        [
+          3,
+          18,
+          2
+        ]
+      ]
+    },
+    {
+      "model": "Extra trees",
+      "best_parameters": {
+        "min_samples_leaf": 1,
+        "max_features": null,
+        "max_depth": 3,
+        "class_weight": "balanced"
+      },
+      "training_cv_accuracy": 0.7158285263123972,
+      "training_cv_macro_f1": 0.6407438599598798,
+      "test_report": {
+        "high risk": {
+          "precision": 0.8,
+          "recall": 0.75,
+          "f1-score": 0.7741935483870968,
+          "support": 16.0
+        },
+        "low risk": {
+          "precision": 0.7666666666666667,
+          "recall": 0.92,
+          "f1-score": 0.8363636363636363,
+          "support": 50.0
+        },
+        "mid risk": {
+          "precision": 0.5,
+          "recall": 0.30434782608695654,
+          "f1-score": 0.3783783783783784,
+          "support": 23.0
+        },
+        "accuracy": 0.7303370786516854,
+        "macro avg": {
+          "precision": 0.688888888888889,
+          "recall": 0.6581159420289855,
+          "f1-score": 0.6629785210430371,
+          "support": 89.0
+        },
+        "weighted avg": {
+          "precision": 0.70374531835206,
+          "recall": 0.7303370786516854,
+          "f1-score": 0.7068312505064951,
+          "support": 89.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          12,
+          1,
+          3
+        ],
+        [
+          0,
+          46,
+          4
+        ],
+        [
+          3,
+          13,
+          7
+        ]
+      ]
+    },
+    {
+      "model": "XGBoost",
+      "best_parameters": {
+        "subsample": 1,
+        "reg_lambda": 1,
+        "reg_alpha": 0,
+        "n_estimators": 100,
+        "min_child_weight": 1,
+        "max_depth": 6,
+        "learning_rate": 0.03,
+        "colsample_bytree": 0.8
+      },
+      "training_cv_accuracy": 0.727049496202722,
+      "training_cv_macro_f1": 0.6266359349848084,
+      "test_report": {
+        "high risk": {
+          "precision": 0.7647058823529411,
+          "recall": 0.8125,
+          "f1-score": 0.7878787878787878,
+          "support": 16.0
+        },
+        "low risk": {
+          "precision": 0.765625,
+          "recall": 0.98,
+          "f1-score": 0.8596491228070176,
+          "support": 50.0
+        },
+        "mid risk": {
+          "precision": 0.875,
+          "recall": 0.30434782608695654,
+          "f1-score": 0.45161290322580644,
+          "support": 23.0
+        },
+        "accuracy": 0.7752808988764045,
+        "macro avg": {
+          "precision": 0.8017769607843137,
+          "recall": 0.6989492753623189,
+          "f1-score": 0.6997136046372039,
+          "support": 89.0
+        },
+        "weighted avg": {
+          "precision": 0.7937252148050231,
+          "recall": 0.7752808988764045,
+          "f1-score": 0.7412990283214049,
+          "support": 89.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          13,
+          2,
+          1
+        ],
+        [
+          1,
+          49,
+          0
+        ],
+        [
+          3,
+          13,
+          7
+        ]
+      ]
+    },
+    {
+      "model": "RBF SVM",
+      "best_parameters": {
+        "model__gamma": 1,
+        "model__class_weight": null,
+        "model__C": 1
+      },
+      "training_cv_accuracy": 0.6825805243143953,
+      "training_cv_macro_f1": 0.5724221666736486,
+      "test_report": {
+        "high risk": {
+          "precision": 0.65,
+          "recall": 0.8125,
+          "f1-score": 0.7222222222222222,
+          "support": 16.0
+        },
+        "low risk": {
+          "precision": 0.7580645161290323,
+          "recall": 0.94,
+          "f1-score": 0.8392857142857143,
+          "support": 50.0
+        },
+        "mid risk": {
+          "precision": 0.7142857142857143,
+          "recall": 0.21739130434782608,
+          "f1-score": 0.3333333333333333,
+          "support": 23.0
+        },
+        "accuracy": 0.7303370786516854,
+        "macro avg": {
+          "precision": 0.7074500768049156,
+          "recall": 0.6566304347826087,
+          "f1-score": 0.6316137566137566,
+          "support": 89.0
+        },
+        "weighted avg": {
+          "precision": 0.7273235644384611,
+          "recall": 0.7303370786516854,
+          "f1-score": 0.6874888532191903,
+          "support": 89.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          13,
+          1,
+          2
+        ],
+        [
+          3,
+          47,
+          0
+        ],
+        [
+          4,
+          14,
+          5
+        ]
+      ]
+    },
+    {
+      "model": "K-nearest neighbors",
+      "best_parameters": {
+        "model__weights": "uniform",
+        "model__p": 1,
+        "model__n_neighbors": 5
+      },
+      "training_cv_accuracy": 0.6638569763569764,
+      "training_cv_macro_f1": 0.5531964143044767,
+      "test_report": {
+        "high risk": {
+          "precision": 0.5789473684210527,
+          "recall": 0.6875,
+          "f1-score": 0.6285714285714286,
+          "support": 16.0
+        },
+        "low risk": {
+          "precision": 0.7272727272727273,
+          "recall": 0.96,
+          "f1-score": 0.8275862068965517,
+          "support": 50.0
+        },
+        "mid risk": {
+          "precision": 0.75,
+          "recall": 0.13043478260869565,
+          "f1-score": 0.2222222222222222,
+          "support": 23.0
+        },
+        "accuracy": 0.6966292134831461,
+        "macro avg": {
+          "precision": 0.6854066985645932,
+          "recall": 0.5926449275362319,
+          "f1-score": 0.5594599525634009,
+          "support": 89.0
+        },
+        "weighted avg": {
+          "precision": 0.7064808343637439,
+          "recall": 0.6966292134831461,
+          "f1-score": 0.6353658911582197,
+          "support": 89.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          11,
+          4,
+          1
+        ],
+        [
+          2,
+          48,
+          0
+        ],
+        [
+          6,
+          14,
+          3
+        ]
+      ]
+    },
+    {
+      "model": "Histogram boosting",
+      "best_parameters": {
+        "min_samples_leaf": 20,
+        "max_leaf_nodes": 5,
+        "max_iter": 100,
+        "learning_rate": 0.03,
+        "l2_regularization": 1
+      },
+      "training_cv_accuracy": 0.7267339515323387,
+      "training_cv_macro_f1": 0.6368466005523055,
+      "test_report": {
+        "high risk": {
+          "precision": 0.7368421052631579,
+          "recall": 0.875,
+          "f1-score": 0.8,
+          "support": 16.0
+        },
+        "low risk": {
+          "precision": 0.734375,
+          "recall": 0.94,
+          "f1-score": 0.8245614035087719,
+          "support": 50.0
+        },
+        "mid risk": {
+          "precision": 0.8333333333333334,
+          "recall": 0.21739130434782608,
+          "f1-score": 0.3448275862068966,
+          "support": 23.0
+        },
+        "accuracy": 0.7415730337078652,
+        "macro avg": {
+          "precision": 0.7681834795321638,
+          "recall": 0.677463768115942,
+          "f1-score": 0.6564629965718896,
+          "support": 89.0
+        },
+        "weighted avg": {
+          "precision": 0.7603920264143504,
+          "recall": 0.7415730337078652,
+          "f1-score": 0.6961697152606429,
+          "support": 89.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          14,
+          2,
+          0
+        ],
+        [
+          2,
+          47,
+          1
+        ],
+        [
+          3,
+          15,
+          5
+        ]
+      ]
+    }
+  ],
+  "selected_by_cv": "XGBoost",
+  "selected_test_accuracy": 0.7752808988764045,
+  "unique_rows": 452,
+  "identical_input_groups": 416,
+  "conflicting_input_groups": 35,
+  "maximum_exact_input_label_agreement_on_unique_records": 0.9203539823008849,
+  "interpretation": "In the duplicate-free data, each (inputs,label) row occurs once. A deterministic function of only these six exact inputs can match at most one label per input group. This is a full-data label-consistency ceiling, not a test-set performance bound or clinical target."
+}

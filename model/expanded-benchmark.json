@@ -1,0 +1,108 @@
+{
+  "source": "https://data.mendeley.com/datasets/ckhgtgdg4f/1",
+  "download": "Springer supplementary CSV, DOI 10.1186/s12911-026-03343-1",
+  "raw_rows": 6103,
+  "quality_filtered_rows": 6059,
+  "deduplicated_rows": 6058,
+  "features": [
+    "Age",
+    "Body Temperature(F) ",
+    "Heart rate(bpm)",
+    "Systolic Blood Pressure(mm Hg)",
+    "Diastolic Blood Pressure(mm Hg)",
+    "BMI(kg/m 2)",
+    "Blood Glucose(HbA1c)",
+    "Blood Glucose(Fasting hour-mg/dl)"
+  ],
+  "train_rows": 4846,
+  "test_rows": 1212,
+  "patient_ids_unique": 6058,
+  "groups": 6058,
+  "split_seed": 20261011,
+  "selection": "4-fold patient/exact-input grouped training CV accuracy; single untouched 20% grouped test fold for selected family",
+  "candidates": [
+    {
+      "model": "Random forest",
+      "cv_accuracy": 0.9919516982664409,
+      "parameters": {
+        "max_depth": null,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "model": "Extra trees",
+      "cv_accuracy": 0.9758556057917931,
+      "parameters": {
+        "max_depth": null,
+        "min_samples_leaf": 1
+      }
+    },
+    {
+      "model": "XGBoost",
+      "cv_accuracy": 0.991539327343139,
+      "parameters": {
+        "learning_rate": 0.05,
+        "max_depth": 6
+      }
+    }
+  ],
+  "selected": "Random forest",
+  "test_report": {
+    "high risk": {
+      "precision": 0.9950738916256158,
+      "recall": 0.9829683698296837,
+      "f1-score": 0.988984088127295,
+      "support": 411.0
+    },
+    "low risk": {
+      "precision": 0.9876237623762376,
+      "recall": 1.0,
+      "f1-score": 0.9937733499377335,
+      "support": 399.0
+    },
+    "mid risk": {
+      "precision": 0.9825870646766169,
+      "recall": 0.9825870646766169,
+      "f1-score": 0.9825870646766169,
+      "support": 402.0
+    },
+    "accuracy": 0.9884488448844885,
+    "macro avg": {
+      "precision": 0.9884282395594902,
+      "recall": 0.9885184781687669,
+      "f1-score": 0.9884481675805485,
+      "support": 1212.0
+    },
+    "weighted avg": {
+      "precision": 0.9884795797411277,
+      "recall": 0.9884488448844885,
+      "f1-score": 0.9884389660441204,
+      "support": 1212.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      404,
+      0,
+      7
+    ],
+    [
+      0,
+      399,
+      0
+    ],
+    [
+      2,
+      5,
+      395
+    ]
+  ],
+  "limitations": [
+    "Source labels include automated risk classifications; not prospective complication outcomes.",
+    "Feature units appear inconsistent: fasting glucose header says mg/dL but values near 5; HbA1c values near 40 need clarification.",
+    "No facility identifiers for external facility validation.",
+    "Not suitable for clinical deployment or automatic replacement of current six-input model."
+  ],
+  "source_csv_sha256": "2d5b35af3c401329ce3dfd8ef0fb48057f66570e7bae24f6f40c970cb012ae0b",
+  "model_artifact": "expanded-research-model.joblib"
+}
