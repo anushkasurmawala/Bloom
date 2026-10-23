@@ -66,9 +66,10 @@ class Handler(SimpleHTTPRequestHandler):
   if not self.origin_ok():return self.reply(403,{'error':'Invalid origin.'})
   path=urlsplit(self.path).path
   if path.startswith('/api/'):
-   if path=='/api/health':return self.reply(200,{'status':'ready','storage':'local SQLite','hosted':False})
+   if path=='/api/health':return self.reply(200,{'status':'ready','storage':'local SQLite','hosted':False,'recovery':False,'emailVerification':False})
    identity=self.identity()
    if not identity:return self.reply(401,{'error':'Sign in required.'})
+   if self.headers.get('X-Bloom-Account') and self.headers['X-Bloom-Account']!=identity['email']:return self.reply(409,{'error':'A different account is signed in in another tab. Export unsaved changes, then reload.'})
    if path=='/api/session':return self.reply(200,{'user':{'email':identity['email']},'csrf':identity['csrf']})
    if path=='/api/state':
     with self.server.store.connect() as db:row=db.execute('SELECT body,revision FROM records WHERE user_id=?',(identity['user_id'],)).fetchone()
@@ -83,6 +84,8 @@ class Handler(SimpleHTTPRequestHandler):
   if not self.origin_ok():return self.reply(403,{'error':'Invalid origin.'})
   path=urlsplit(self.path).path
   try:
+   if path=='/api/forgot-password' and method=='POST':return self.reply(503,{'error':'Password-reset emails are available in the hosted version. This local preview has no email service connected.'})
+   if path=='/api/resend-verification' and method=='POST':return self.reply(200,{'message':'Local preview accounts do not require email verification. You can sign in directly.'})
    if path in ['/api/register','/api/login'] and method=='POST':
     if self.server.limited(self.client_address[0]):return self.reply(429,{'error':'Too many attempts. Try again in 10 minutes.'})
     data=self.body();email=str(data.get('email','')).strip().lower();password=data.get('password','')
@@ -91,7 +94,7 @@ class Handler(SimpleHTTPRequestHandler):
      if path=='/api/register':
       uid=secrets.token_hex(16);salt=secrets.token_bytes(16)
       try:db.execute('INSERT INTO users VALUES(?,?,?,?,?)',(uid,email,salt,password_hash(password,salt),int(time.time())))
-      except sqlite3.IntegrityError:return self.reply(409,{'error':'Unable to create account. Try signing in.'})
+      except sqlite3.IntegrityError:return self.reply(409,{'error':'An account with this email already exists. Sign in or use password recovery on the hosted version.'})
       db.execute('INSERT INTO records VALUES(?,?,0)',(uid,self.server.store.encode(blank())))
      else:
       user=db.execute('SELECT * FROM users WHERE email=?',(email,)).fetchone();salt=user['salt'] if user else bytes(16);derived=password_hash(password,salt)
@@ -101,6 +104,7 @@ class Handler(SimpleHTTPRequestHandler):
     return self.reply(200,{'user':{'email':email},'csrf':csrf},f'bloom_session={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=43200')
    identity=self.identity()
    if not identity:return self.reply(401,{'error':'Sign in required.'})
+   if self.headers.get('X-Bloom-Account') and self.headers['X-Bloom-Account']!=identity['email']:return self.reply(409,{'error':'A different account is signed in in another tab. Export unsaved changes, then reload.'})
    if not hmac.compare_digest(self.headers.get('X-CSRF-Token',''),identity['csrf']):return self.reply(403,{'error':'Request verification failed.'})
    if path=='/api/logout' and method=='POST':
     with self.server.store.connect() as db:db.execute('DELETE FROM sessions WHERE token=?',(identity['token'],))

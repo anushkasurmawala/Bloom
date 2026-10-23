@@ -1,45 +1,60 @@
-# MaternaCare
+# Bloom · Pregnancy companion
 
-Pregnancy companion project, originally developed as Bloom. The interface retains the Bloom name.
+A pregnancy-companion prototype with a health journal, reminders, educational resources and experimental risk-category estimates. The interface is named **Bloom**.
 
-## Current model results
+## Host on Netlify
 
-The running six-input model is a random forest selected from five methods: test accuracy 75.28%, high-risk recall 87.50% (14/16). A separate eight-input research model achieved 98.84% held-out accuracy on expanded data; it is not integrated into the app and has unresolved source-unit and label-provenance limitations. See [experiment report](model/ACCURACY-EXPERIMENTS.md).
+This project now includes a real hosted account backend: **Netlify Functions + Supabase Auth + PostgreSQL**. Netlify serves `dist/`; serverless functions handle account sessions and encrypted journal storage. The website does not need a Python server running on your laptop.
 
-## Run locally
+[Deploy to Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/anushkasurmawala/Bloom)
 
-Install `backend/requirements.txt`, then run `python3 backend/server.py --port 8081` and open http://localhost:8081/. See [backend instructions](backend/README.md) for details.
+Follow **[NETLIFY-SETUP.md](NETLIFY-SETUP.md)**. Import the full repository, not just the dist folder. Configure the environment variables and Supabase email/redirect settings before testing accounts. The Supabase `bloom` project and journal schema have been created; Netlify deployment and real email delivery require the remaining provider setup. Never commit `.env`, database files or encryption keys.
 
-## Development history
+### Account features
 
-The following documentation records earlier stages. For current account storage, follow the backend instructions above.
+- Sign-in-first interface, sign-up, password confirmation and show/hide password controls.
+- Email verification, resend verification, forgot-password email and new-password screen.
+- Managed password authentication, expiring sessions and server-side refresh.
+- Secure, HttpOnly session cookies; no browser-localStorage access/refresh tokens.
+- Per-account journals with PostgreSQL row-level security and AES-256-GCM encryption before storage.
+- CSRF/origin checks, stale-write detection, cross-tab account mismatch checks, import/export and account deletion.
 
-Model update: version 2 uses a random forest selected after comparing five methods, including XGBoost. See model/README.md and model/comparison.json for results and limitations.
+## Companion features
 
-# Bloom — Account-enabled local app
+Risk-category estimation, health trends, symptom and wellbeing logs, medication schedules, an appointment planner, pregnancy timeline and due-date countdown, sourced educational articles, curated chatbot responses, visit questions and reports, birth preferences, hospital-bag checklist, movement observations, contraction timing, postpartum journal and ICS calendar downloads.
 
-Start with `python3 backend/server.py --port 8081` and open http://localhost:8081. See [backend instructions](backend/README.md) for installation, storage and release limits.
+Clinic bookings are plans, not real appointments sent to a clinic. The chatbot is curated, not generative AI. Medication alerts require the app to be open. Background push and automatic calendar synchronization are not connected. These distinctions remain visible in the app.
 
-Version 3 adds registration, sign-in/out, encrypted local SQLite journals, account isolation, save status, conflict checks, JSON import and account deletion. Prior localStorage-only documentation below describes earlier versions. No cloud deployment is complete.
+## Model results
 
-# Bloom — Pregnancy companion
+The app uses the original six-input **random forest** selected by grouped training cross-validation macro F1 among Decision Tree, Logistic Regression, Random Forest, Extra Trees and XGBoost. On the exploratory 89-record holdout: **75.28% accuracy**, **0.7091 macro F1** and **87.50% high-risk recall (14/16)**. The initial tree identified 11/16 high-risk records. The holdout had already been inspected, so it is not an independent final test.
 
-Working educational prototype with browser-local storage, real UCI decision-tree inference, profiles, timeline, measurements and BP charts, symptom diary, daily in-app medication reminders, demo appointment requests, sourced educational links, curated rule-based chatbot, visit checklist, printable report, CSV/JSON exports, deletion controls, responsive interface and offline app-shell cache after first successful visit.
+The dataset has 452 deduplicated rows, 416 distinct input vectors and 35 groups with conflicting labels. Identical vectors are grouped across splits; patient-level separation cannot be established without patient identifiers.
 
-## Run locally
-From this directory: `python3 -m http.server 8080 --directory dist`
-Open http://localhost:8080. Keep the page open for medication alerts.
+A separate eight-input research model achieved **98.84% accuracy on 1,212 held-out records** from expanded data. That model is included as a compressed joblib artifact, but **is not integrated into the app**. The source units and automated risk-label provenance need clarification. See the [full experiment report](model/ACCURACY-EXPERIMENTS.md) and [model documentation](model/README.md).
 
-## Model
-Training source: `model/train.py`. Dataset: Marzia Ahmed, UCI Maternal Health Risk, DOI 10.24432/C5DP5D, CC BY 4.0. Download archive into ../../work/maternal.zip to retrain. Dependencies: pandas and scikit-learn. Exact duplicate rows are removed and equal feature vectors grouped across splits. Hyperparameter choice uses grouped cross-validation on the training subset only. The evaluated tree is exported unchanged to dist/model.json; no model probabilities are presented as clinical confidence. See model/metrics.json for full results.
+These are educational research estimates, not clinical diagnoses or proof of safety. Use fictional health information when testing this prototype.
 
-## Limits
-Not validated for clinical use. No real appointment delivery, generative AI, cloud accounts, encrypted medical storage, background notifications, multilingual translation, voice, document vault, caregiver sharing or postpartum-specific workflows. App data belongs to one local browser, not authenticated users. NHS links require internet; their contents are not cached. Exported HTML reports can be printed to PDF. Use fictional data during development. Do not infer safety from a low-risk estimate.
+## Local preview for earlier accounts
 
-## Next stages
-Authenticated backend with per-user access; clinic integration and confirmation workflow; reliable notification provider; clinician-reviewed chatbot sources and content; accessibility and language work; independent clinical model validation.
+```sh
+python3 -m pip install -r backend/requirements.txt
+python3 backend/server.py --port 8081
+```
 
-## Added in version 2
-Daily wellbeing logs (mood, sleep, weight, water), weekly NHS size guide (weeks 4–41), due-date countdown, birth preferences and bag checklist, sourced food lookup, optional movement observations without health thresholds, persistent contraction timer, postpartum journal/mode, ICS calendar export, opt-in open-app notifications and appointment alerts. All new journals are included in the printable report and full JSON export. Caregiver sharing is deliberately excluded.
+Open http://localhost:8081/. This preview keeps earlier encrypted SQLite journals separate from hosted Supabase accounts. It does not send password-reset emails. To move records, export from the local account, create a hosted account, and import the journal intentionally. See [local backend documentation](backend/README.md).
 
-Background Web Push and two-way calendar sync remain unconnected. Calendar downloads are a one-way alternative; reminder delivery is controlled by the receiving calendar app. Weekly lengths are reference estimates, with no fetal weight prediction or individual ultrasound assessment. Some weeks have comparison text only. External sources were checked 10 October 2026; content still needs clinical review before patient use.
+## Checks
+
+Node 22 or newer:
+
+```sh
+npm run check
+npm test
+```
+
+The API tests use a simulated auth transport. Database isolation was additionally tested on the selected Supabase project with synthetic rows inside a rolled-back transaction. Live email delivery and deployment must be checked after provider setup.
+
+## Dataset attribution
+
+Original data: Marzia Ahmed, [UCI Maternal Health Risk](https://archive.ics.uci.edu/dataset/863/maternal+health+risk), DOI 10.24432/C5DP5D, CC BY 4.0. Expanded research data and publication are attributed in the experiment report. Educational links are provided to their original publishers. No clinical validation is claimed.
