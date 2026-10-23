@@ -15,7 +15,15 @@ The hosted prototype uses **Netlify Functions + Supabase Auth + PostgreSQL**. It
 
 Project **bloom**, reference **hjqkwgxwlpdxaddgbmcx**, in the **anushka** organization. Database migration `supabase/migrations/202610230001_bloom_journals.sql` has been applied. Existing Supabase projects and local journals have not been migrated or changed.
 
-## Netlify setup
+## Current deployment
+
+Live prototype: https://bloom-maternacare-anushka.netlify.app
+
+Netlify project: `bloom-maternacare-anushka` (`eabe6559-6a7e-4b48-83b1-f3f0c89ab061`). The four hosting environment variables are configured. Site URL and email redirect settings were saved by the project owner. API health, authentication rejection, cross-origin protection and the real Supabase invalid-login response were verified. Successful registration, actual email delivery and the full email-reset journey still need a user inbox test. Existing local accounts are not automatically migrated.
+
+The current deployment was uploaded using the Netlify CLI. GitHub is updated separately; continuous deployment from GitHub has not been linked automatically.
+
+## Reproduce the Netlify setup
 
 1. In Netlify, import the GitHub repository `anushkasurmawala/Bloom`.
 2. Use the repository root as base directory. `netlify.toml` sets the publish directory to `dist`, functions directory to `netlify/functions` and build command to `npm run check`. Node 22 is required. **Do not just drag the dist folder into Netlify**; that omits the account backend.

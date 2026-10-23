@@ -8,7 +8,7 @@ This project now includes a real hosted account backend: **Netlify Functions + S
 
 [Deploy to Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/anushkasurmawala/Bloom)
 
-Follow **[NETLIFY-SETUP.md](NETLIFY-SETUP.md)**. Import the full repository, not just the dist folder. Configure the environment variables and Supabase email/redirect settings before testing accounts. The Supabase `bloom` project and journal schema have been created; Netlify deployment and real email delivery require the remaining provider setup. Never commit `.env`, database files or encryption keys.
+Follow **[NETLIFY-SETUP.md](NETLIFY-SETUP.md)**. Import the full repository, not just the dist folder. Configure the environment variables and Supabase email/redirect settings before testing accounts. The prototype is deployed at **[https://bloom-maternacare-anushka.netlify.app](https://bloom-maternacare-anushka.netlify.app)**. The Supabase `bloom` project and journal schema are connected, and the live API has been checked. Real inbox delivery and the complete email-link flow still need a user test. Never commit `.env`, database files or encryption keys.
 
 ### Account features
 
@@ -53,7 +53,7 @@ npm run check
 npm test
 ```
 
-The API tests use a simulated auth transport. Database isolation was additionally tested on the selected Supabase project with synthetic rows inside a rolled-back transaction. Live email delivery and deployment must be checked after provider setup.
+The API tests use a simulated auth transport. Database isolation was additionally tested on the selected Supabase project with synthetic rows inside a rolled-back transaction. The deployed API health, unauthorized access, input validation, cross-origin protection and real Supabase invalid-login response have been checked. Successful email delivery and the full browser email-link flow still require a user test.
 
 ## Dataset attribution
 
