@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-23",
+  "url": "https://bloom-maternacare-anushka.netlify.app",
+  "results": [
+    {
+      "name": "Two real Supabase users sign in through Netlify",
+      "status": "passed"
+    },
+    {
+      "name": "Real database owner isolation",
+      "status": "passed"
+    },
+    {
+      "name": "Real stale-revision write rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Real cross-account tab guard rejects mixed identity",
+      "status": "passed"
+    },
+    {
+      "name": "Real CSRF rejection",
+      "status": "passed"
+    },
+    {
+      "name": "Logout and fresh sign-in retain the journal",
+      "status": "passed"
+    },
+    {
+      "name": "Delete both disposable accounts through the live account API",
+      "status": "passed"
+    }
+  ]
+}

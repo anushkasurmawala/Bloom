@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-23",
+  "url": "https://bloom-maternacare-anushka.netlify.app",
+  "harness": "JSDOM DOM event execution against live deployed assets, Netlify API and Supabase. Not a real browser; Chrome was blocked by the environment.",
+  "fixture": "Two synthetic preconfirmed accounts provisioned for tests; verification and email delivery not tested.",
+  "results": [
+    {
+      "name": "Live sign-in and initial empty journal",
+      "status": "passed"
+    },
+    {
+      "name": "Profile, due date and reload persistence",
+      "status": "passed"
+    },
+    {
+      "name": "Low, mid and high risk predictions saved to live database",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid pressure clears stale results and does not save",
+      "status": "passed"
+    },
+    {
+      "name": "Symptom journal escapes HTML and saves notes",
+      "status": "passed"
+    },
+    {
+      "name": "Daily wellbeing saves and updates one entry per date",
+      "status": "passed"
+    },
+    {
+      "name": "Medication schedule and taken status",
+      "status": "passed"
+    },
+    {
+      "name": "Appointment planner persists unconfirmed plan",
+      "status": "passed"
+    },
+    {
+      "name": "Visit question and completion checkbox",
+      "status": "passed"
+    },
+    {
+      "name": "Birth preferences and hospital bag checklist",
+      "status": "passed"
+    },
+    {
+      "name": "Weekly growth guide and food lookup",
+      "status": "passed"
+    },
+    {
+      "name": "Movement observations",
+      "status": "passed"
+    },
+    {
+      "name": "Contraction timer navigation and completion",
+      "status": "passed"
+    },
+    {
+      "name": "Curated chatbot and educational links",
+      "status": "passed"
+    },
+    {
+      "name": "Postpartum transition, journal and risk-model restriction",
+      "status": "passed"
+    },
+    {
+      "name": "Calendar, CSV, birth plan, report and JSON export content",
+      "status": "passed"
+    },
+    {
+      "name": "Import export round-trip and live persistence",
+      "status": "passed"
+    },
+    {
+      "name": "Model evaluation page loads all five recorded methods",
+      "status": "passed"
+    },
+    {
+      "name": "Notification fallback when native browser support is unavailable",
+      "status": "passed"
+    },
+    {
+      "name": "Stale second tab cannot overwrite newer saved records",
+      "status": "failed",
+      "error": "Missing profileForm"
+    },
+    {
+      "name": "Failed save retains edits and retry persists them",
+      "status": "failed",
+      "error": "w is not defined"
+    },
+    {
+      "name": "Second account cannot see the first account journal",
+      "status": "failed",
+      "error": "Timed out: account bootstrap"
+    },
+    {
+      "name": "Cross-account tab guard rejects a mismatched account header",
+      "status": "failed",
+      "error": "Cannot read properties of undefined (reading 'w')"
+    },
+    {
+      "name": "Logout blocks journal access and sign-in restores saved history",
+      "status": "passed"
+    },
+    {
+      "name": "Clear records and delete disposable accounts through the app",
+      "status": "failed",
+      "error": "Cannot read properties of undefined (reading 'w')"
+    }
+  ],
+  "consoleErrors": []
+}

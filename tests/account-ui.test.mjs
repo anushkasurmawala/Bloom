@@ -37,3 +37,14 @@ test('email tokens are removed before any fetch and recovery opens the new-passw
  u.responses.set('/api/auth-callback',{status:200,body:{user:{email:'a@example.test'},csrf:'csrf',recovery:true}});await u.flush();
  assert.equal(u.replacements.length,1);assert(u.requests.every(r=>r.hash===''));assert.equal(u.run('accountMode'),'reset');assert.equal(u.run('accountUser'),null);assert.equal(u.run('accountCsrf'),'csrf');
 });
+test('postpartum risk page renders without a model-metrics panel',()=>{
+ const app=fs.readFileSync(new URL('../dist/app.js',import.meta.url),'utf8');const renderSource=app.slice(app.indexOf('function render(){'),app.indexOf('\nfunction predict('));
+ const view={innerHTML:''};const context=vm.createContext({accountReady:true,accountUser:{email:'test@example.test'},location:{hash:'#risk'},model:{},renderers:{risk:()=>'<h1>Pregnancy model unavailable after birth</h1>'},document:{querySelectorAll:()=>[]},$:s=>s==='#view'?view:null});
+ vm.runInContext(renderSource,context);vm.runInContext('render()',context);assert.match(view.innerHTML,/unavailable after birth/);
+});
+test('invalid pressure clears the previous risk result',()=>{
+ const app=fs.readFileSync(new URL('../dist/app.js',import.meta.url),'utf8');const start=app.indexOf("document.addEventListener('submit',e=>{");const end=app.indexOf("document.addEventListener('click',",start);let submitHandler;const result={innerHTML:'<div class="big">high risk</div>'};let message='';
+ const inputs={Age:'23',SystolicBP:'70',DiastolicBP:'90',BS:'7',BodyTemp:'98',HeartRate:'76'};
+ const context=vm.createContext({document:{addEventListener:(type,fn)=>{if(type==='submit')submitHandler=fn}},vals:()=>inputs,crypto:{randomUUID:()=> 'test-id'},model:{features:Object.keys(inputs)},$:s=>s==='#result'?result:null,notify:text=>message=text});
+ vm.runInContext(app.slice(start,end),context);submitHandler({preventDefault(){},target:{id:'riskForm'}});assert.equal(result.innerHTML,'');assert.match(message,/Systolic/);
+});
