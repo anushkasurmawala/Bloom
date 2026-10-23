@@ -48,3 +48,8 @@ test('invalid pressure clears the previous risk result',()=>{
  const context=vm.createContext({document:{addEventListener:(type,fn)=>{if(type==='submit')submitHandler=fn}},vals:()=>inputs,crypto:{randomUUID:()=> 'test-id'},model:{features:Object.keys(inputs)},$:s=>s==='#result'?result:null,notify:text=>message=text});
  vm.runInContext(app.slice(start,end),context);submitHandler({preventDefault(){},target:{id:'riskForm'}});assert.equal(result.innerHTML,'');assert.match(message,/Systolic/);
 });
+test('postpartum overview omits the pregnancy countdown while pregnancy mode retains it',()=>{
+ const source=fs.readFileSync(new URL('../dist/features.js',import.meta.url),'utf8');const line=source.split('\n').find(x=>x.startsWith('renderers.overview='));
+ const state={mode:'postpartum'},renderers={};const context=vm.createContext({state,renderers,ensureExtras(){},heading:(a,b)=>a+b,card:(a,b)=>a+b,baseOverview:()=> 'Pregnancy overview',countdown:()=> 'Pregnancy countdown'});
+ vm.runInContext(line,context);assert(!renderers.overview().includes('Pregnancy countdown'));state.mode='pregnancy';assert(renderers.overview().includes('Pregnancy countdown'));
+});

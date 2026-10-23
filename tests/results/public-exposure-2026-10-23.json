@@ -1,0 +1,149 @@
+{
+  "results": [
+    {
+      "path": "/.env",
+      "status": 404,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/.env.local",
+      "status": 404,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/.git/config",
+      "status": 404,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/netlify/functions/api.mjs",
+      "status": 404,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/backend/server.py",
+      "status": 404,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/supabase/migrations/202610230001_bloom_journals.sql",
+      "status": 404,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/api/state",
+      "status": 401,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/api/session",
+      "status": 401,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false
+    },
+    {
+      "path": "/accounts.js",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/comparison.json",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/features.js",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/index.html",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": false
+    },
+    {
+      "path": "/inference.js",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/legacy-export.html",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": false
+    },
+    {
+      "path": "/legacy-export.js",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/model-comparison.js",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/model-v2.json",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/model.json",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/sw.js",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    },
+    {
+      "path": "/weeks.json",
+      "status": 200,
+      "privateSecretMatches": 0,
+      "secretPattern": false,
+      "matchesLocal": true
+    }
+  ]
+}

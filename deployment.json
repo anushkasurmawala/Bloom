@@ -1,11 +1,13 @@
 {
   "url": "https://bloom-maternacare-anushka.netlify.app",
   "netlify_site_id": "eabe6559-6a7e-4b48-83b1-f3f0c89ab061",
-  "netlify_deploy_id": "6adb5027a52e2352d04d4e5a",
+  "netlify_deploy_id": "6adb7f98e080935ac82af9b9",
   "supabase_project_id": "hjqkwgxwlpdxaddgbmcx",
   "repository": "https://github.com/anushkasurmawala/Bloom",
   "deployed_date": "2026-10-23",
   "live_api_checked": true,
-  "real_email_delivery_checked": false,
-  "automatic_github_deploys": false
+  "real_email_delivery_checked": true,
+  "automatic_github_deploys": false,
+  "real_browser_core_flows_checked": true,
+  "password_reset_completion_checked": false
 }
